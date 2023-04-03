@@ -26,6 +26,8 @@ def get_book_by_id(id):
             return book
     return None
 
+''' 
+'''
 # rotas
 @app.route('/')
 def home():
