@@ -26,8 +26,6 @@ def get_book_by_id(id):
             return book
     return None
 
-''' 
-'''
 # rotas
 @app.route('/')
 def home():
@@ -43,7 +41,7 @@ def book(id):
     if book_ is not None:
         return jsonify(book_)
     else:
-        return "Error. Resource not found", 404
+        return "Erro! Recurso não encontrado.", 404
     
 @app.route('/add', methods=["POST"])
 def add_book():
@@ -55,6 +53,7 @@ def add_book():
 @app.route('/<int:id>/edit', methods=['GET', 'POST'])
 def edit(id):
     book = get_book_by_id(id)
+    index = books.index(book)
 
     if book is None:
         return "Error. Resource not found", 404
@@ -71,18 +70,17 @@ def edit(id):
 
     return "Update successfully!", 200
 
-# TODO
-'''
-Você deverá criar uma rota para deletar um item da base (vetor).
-A rota deve ser no formato "/<id>/delete". Atente-se à variável
-'id'. A requisição é somente para POST. Implemente toda lógica
-necessária para a remoção do item. Dica: use os métodos 
-.index() [1] e o método pop() [2].
-[1] https://www.programiz.com/python-programming/methods/list/index
-[2] https://www.programiz.com/python-programming/methods/list/pop
-'''
+@app.route('/<int:id>/delete', methods=['POST'])
+def delete(id):
+    book = get_book_by_id(id)
+    print(book);
+    index = books.index(book)
 
+    if book is None:
+        return "Erro. Livro não encontrado."  
 
+    item_removido = books.pop(index)
+    return "Livro excluído com sucesso!", 200
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
